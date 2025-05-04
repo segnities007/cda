@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Mvvm"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.cda.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Mvvm">
             <intent-filter>

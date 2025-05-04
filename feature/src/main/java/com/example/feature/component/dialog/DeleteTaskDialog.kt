@@ -24,21 +24,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.domain.model.DirectoryWithTasks
 import com.example.domain.presentation.HomeStatus
-import com.example.feature.screen.home.HomeAction
+import com.example.feature.screen.home.HomeScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeleteTaskDialog(
-    currentDirectoryWithTasks: DirectoryWithTasks,
-    onHomeAction: (HomeAction) -> Unit,
-    onUpdateHomeStatus: (HomeStatus) -> Unit,
+    state: HomeScreen.HomeState,
 ) {
     BasicAlertDialog(
         modifier =
             Modifier
                 .clip(RoundedCornerShape(16.dp))
                 .background(color = MaterialTheme.colorScheme.background),
-        onDismissRequest = { onUpdateHomeStatus(HomeStatus.DEFAULT) },
+        onDismissRequest = { state.event(HomeScreen.HomeEvent.UpdateHomeStatus(HomeStatus.DEFAULT)) },
     ) {
         Column(
             modifier =
@@ -58,16 +56,14 @@ fun DeleteTaskDialog(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 TextButton(
-                    onClick = {
-                        onUpdateHomeStatus(HomeStatus.DEFAULT)
-                    },
+                    onClick = { state.event(HomeScreen.HomeEvent.UpdateHomeStatus(HomeStatus.DEFAULT)) },
                 ) {
                     Text("Cancel")
                 }
                 TextButton(
                     onClick = {
-                        onHomeAction(HomeAction.DeleteTask(currentDirectoryWithTasks))
-                        onUpdateHomeStatus(HomeStatus.DEFAULT)
+                        state.event(HomeScreen.HomeEvent.DeleteTask(state.directories[state.selectedDirectoryIndex]))
+                        state.event(HomeScreen.HomeEvent.UpdateHomeStatus(HomeStatus.DEFAULT))
                     },
                 ) {
                     Text("Delete")
@@ -81,8 +77,6 @@ fun DeleteTaskDialog(
 @Preview
 private fun DeleteTaskDialogPreview() {
     DeleteTaskDialog(
-        onUpdateHomeStatus = {},
-        currentDirectoryWithTasks = DirectoryWithTasks(),
-        onHomeAction = {},
+        state = HomeScreen.HomeState{}
     )
 }

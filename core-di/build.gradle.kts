@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.core_module"
+    namespace = "com.example.core_di"
     compileSdk = 35
 
     defaultConfig {
@@ -46,6 +46,15 @@ dependencies {
     // hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    // circuit
+    implementation(libs.circuit.foundation)
+    implementation(libs.circuit.backstack)
+    implementation(libs.circuit.runtime)
+    implementation(libs.circuit.runtime.presenter)
+    implementation(libs.circuit.runtime.ui)
+    implementation(libs.circuit.codegen.annotations)
+    ksp(libs.circuit.codegen)
 
     // room
     implementation(libs.androidx.room.runtime)

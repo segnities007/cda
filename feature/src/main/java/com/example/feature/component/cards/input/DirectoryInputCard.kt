@@ -23,11 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.domain.presentation.HomeStatus
+import com.example.feature.screen.home.HomeScreen
 
 @Composable
 fun DirectoryInputCard(
-    onCreate: (title: String) -> Unit,
-    onUpdateHomeStatus: (HomeStatus) -> Unit,
+    state: HomeScreen.HomeState,
 ) {
     var title by remember { mutableStateOf("") }
 
@@ -51,8 +51,8 @@ fun DirectoryInputCard(
             ) {
                 Input(value = title, onValueChange = { title = it })
                 EnterButton(onClick = {
-                    onCreate(title)
-                    onUpdateHomeStatus(HomeStatus.DEFAULT)
+                    state.event(HomeScreen.HomeEvent.InsertDirectory(label = title))
+                    state.event(HomeScreen.HomeEvent.UpdateHomeStatus(HomeStatus.DEFAULT))
                 })
             }
         }
@@ -92,7 +92,6 @@ private fun EnterButton(onClick: () -> Unit) {
 @Preview
 private fun DirectoryInputCardPreview() {
     DirectoryInputCard(
-        onCreate = { _ -> },
-        onUpdateHomeStatus = {},
+        state = HomeScreen.HomeState{}
     )
 }

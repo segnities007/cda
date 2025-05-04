@@ -40,19 +40,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.domain.presentation.FloatingActionButtonItem
 import com.example.domain.presentation.HomeStatus
 import com.example.feature.R
+import com.example.feature.screen.home.HomeScreen
 
 @Composable
 fun MultiFloatingActionButton(
-    fabIcon: Painter,
-    homeStatus: HomeStatus,
-    onCollapsed: (HomeStatus) -> Unit,
+    state: HomeScreen.HomeState,
     items: List<FloatingActionButtonItem>,
 ) {
     var currentState by remember { mutableStateOf(MultiFloatingActionButtonState.COLLAPSED) }
@@ -63,8 +61,8 @@ fun MultiFloatingActionButton(
                 currentState == MultiFloatingActionButtonState.EXPANDED -> {
                     MultiFloatingActionButtonState.COLLAPSED
                 }
-                currentState == MultiFloatingActionButtonState.COLLAPSED && homeStatus != HomeStatus.DEFAULT -> {
-                    onCollapsed(HomeStatus.DEFAULT)
+                currentState == MultiFloatingActionButtonState.COLLAPSED && state.homeStatus != HomeStatus.DEFAULT -> {
+                    state.event(HomeScreen.HomeEvent.UpdateHomeStatus(HomeStatus.DEFAULT))
                     MultiFloatingActionButtonState.COLLAPSED
                 }
                 else -> {
@@ -151,10 +149,10 @@ fun MultiFloatingActionButton(
                         stateChange()
                     },
                 ) {
-                    when (homeStatus) {
+                    when (state.homeStatus) {
                         HomeStatus.DEFAULT -> {
                             Icon(
-                                painter = fabIcon,
+                                painter = painterResource(R.drawable.baseline_settings_24),
                                 contentDescription = "home",
                                 tint = Color.White,
                             )
@@ -242,9 +240,7 @@ private fun MultiFloatingActionButtonPreview() {
             ),
         )
     MultiFloatingActionButton(
-        fabIcon = painterResource(R.drawable.baseline_settings_24),
         items = items,
-        onCollapsed = {},
-        homeStatus = HomeStatus.DEFAULT,
+        state = HomeScreen.HomeState {},
     )
 }
