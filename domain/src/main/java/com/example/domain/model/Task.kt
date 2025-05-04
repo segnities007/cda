@@ -23,7 +23,5 @@ data class Task(
     val description: String = "no description",
     val isCompleted: Boolean = false,
     val createAt: Long = System.currentTimeMillis(),
-    val updateAt: Long = System.currentTimeMillis(),
-    val priority: Priority = Priority.Medium,
     val directoryId: Int = 0,
 )

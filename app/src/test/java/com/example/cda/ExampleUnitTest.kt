@@ -1,4 +1,4 @@
-package com.example.mvvm
+package com.example.cda
 
 import org.junit.Assert.*
 import org.junit.Test

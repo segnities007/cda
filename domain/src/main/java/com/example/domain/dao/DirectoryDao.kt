@@ -31,4 +31,7 @@ interface DirectoryDao {
 
     @Query("SELECT * FROM directories")
     suspend fun getAllDirectoryWithTasks(): List<DirectoryWithTasks>
+
+    @Query("SELECT * FROM tasks WHERE id = :taskId")
+    suspend fun getTaskById(taskId: Int): Task
 }

@@ -17,15 +17,12 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.domain.model.Task
-import com.example.domain.presentation.Route
-import com.example.domain.presentation.Route.TodoDetail
-import com.example.feature.screen.home.HomeAction
+import com.example.feature.screen.home.HomeScreen
 
 @Composable
 fun TaskCard(
     task: Task,
-    onNavigate: (Route) -> Unit,
-    onHomeAction: (HomeAction) -> Unit,
+    state: HomeScreen.HomeState,
 ) {
     val cardColor =
         when (task.isCompleted) {
@@ -40,7 +37,7 @@ fun TaskCard(
             ),
         shape = RoundedCornerShape(4.dp),
         onClick = {
-            onNavigate(TodoDetail(task.id))
+            // TODO
         },
     ) {
         Row(
@@ -50,7 +47,7 @@ fun TaskCard(
                     .height(64.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            CheckBox(task = task, onHomeAction = onHomeAction)
+            CheckBox(task = task, state = state)
             Text(
                 text = task.title,
                 modifier = Modifier.scale(1.25f),
@@ -62,7 +59,7 @@ fun TaskCard(
 @Composable
 private fun CheckBox(
     task: Task,
-    onHomeAction: (HomeAction) -> Unit,
+    state: HomeScreen.HomeState,
 ) {
     Checkbox(
         modifier =
@@ -71,11 +68,7 @@ private fun CheckBox(
                 .padding(8.dp),
         checked = task.isCompleted,
         onCheckedChange = {
-            onHomeAction(
-                HomeAction.UpdateTask(
-                    task = task.copy(isCompleted = it),
-                ),
-            )
+            state.event(HomeScreen.HomeEvent.UpdateTask(task.copy(isCompleted = it)))
         },
     )
 }
@@ -89,7 +82,6 @@ private fun TaskCardPreview() {
                 title = "aaa",
                 directoryId = 0,
             ),
-        onHomeAction = {},
-        onNavigate = {},
+        state = HomeScreen.HomeState {},
     )
 }

@@ -37,4 +37,6 @@ class DirectoryRepositoryImpl
         }
 
         override suspend fun getAllDirectoryWithTasks(): List<DirectoryWithTasks> = directoryDao.getAllDirectoryWithTasks()
+
+        override suspend fun getTaskById(taskId: Int): Task = directoryDao.getTaskById(taskId)
     }

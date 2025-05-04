@@ -52,4 +52,13 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    // circuit
+    implementation(libs.circuit.foundation)
+    implementation(libs.circuit.backstack)
+    implementation(libs.circuit.runtime)
+    implementation(libs.circuit.runtime.presenter)
+    implementation(libs.circuit.runtime.ui)
+    implementation(libs.circuit.codegen.annotations)
+    ksp(libs.circuit.codegen)
 }

@@ -1,4 +1,4 @@
-package com.example.mvvm.data.src.androidTest.java.com.example.data
+package com.example.cda.data.src.androidTest.java.com.example.data
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

@@ -1,5 +1,7 @@
 [versions]
 agp = "8.9.2"
+annotations = "2.5.1"
+circuitFoundation = "0.27.1"
 hiltAndroid = "2.56.1"
 kotlin = "2.1.20"
 coreKtx = "1.16.0"
@@ -12,8 +14,6 @@ activityCompose = "1.10.1"
 composeBom = "2025.04.01"
 navigationCompose = "2.8.9"
 roomRuntime = "2.7.1"
-appcompat = "1.7.0"
-material = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -21,6 +21,15 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+annotations = { module = "com.squareup.anvil:annotations", version.ref = "annotations" }
+circuit-backstack = { module = "com.slack.circuit:circuit-backstack", version.ref = "circuitFoundation" }
+circuit-codegen = { module = "com.slack.circuit:circuit-codegen", version.ref = "circuitFoundation" }
+circuit-codegen-annotations = { module = "com.slack.circuit:circuit-codegen-annotations", version.ref = "circuitFoundation" }
+circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuitFoundation" }
+circuit-runtime = { module = "com.slack.circuit:circuit-runtime", version.ref = "circuitFoundation" }
+circuit-runtime-presenter = { module = "com.slack.circuit:circuit-runtime-presenter", version.ref = "circuitFoundation" }
+circuit-runtime-ui = { module = "com.slack.circuit:circuit-runtime-ui", version.ref = "circuitFoundation" }
+compiler = { module = "com.squareup.anvil:compiler", version.ref = "annotations" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -37,8 +46,6 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

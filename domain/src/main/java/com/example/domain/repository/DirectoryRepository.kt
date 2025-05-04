@@ -18,4 +18,6 @@ interface DirectoryRepository {
     suspend fun deleteDirectory(directory: Directory)
 
     suspend fun getAllDirectoryWithTasks(): List<DirectoryWithTasks>
+
+    suspend fun getTaskById(taskId: Int): Task
 }

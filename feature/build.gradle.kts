@@ -6,6 +6,8 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
     id("androidx.room")
+    id("kotlin-parcelize")
+    id("com.squareup.anvil") version "2.5.1"
 }
 
 android {
@@ -42,7 +44,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(project(":core"))
+    implementation(project(":core-di"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -59,12 +61,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // navigation
-    implementation(libs.androidx.navigation.compose)
-
-    // serialization
-    implementation(libs.kotlinx.serialization.json)
-
     // hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
@@ -73,4 +69,17 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    // circuit
+    implementation(libs.circuit.foundation)
+    implementation(libs.circuit.backstack)
+    implementation(libs.circuit.runtime)
+    implementation(libs.circuit.runtime.presenter)
+    implementation(libs.circuit.runtime.ui)
+    implementation(libs.circuit.codegen.annotations)
+    ksp(libs.circuit.codegen)
+}
+
+ksp {
+    arg("circuit.codegen.mode", "hilt")
 }

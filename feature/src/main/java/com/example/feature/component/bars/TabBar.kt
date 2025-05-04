@@ -19,16 +19,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.feature.screen.home.HomeScreen
 
 @Composable
 fun TabBar(
-    labels: List<String>,
-    tabIndex: Int,
-    onTabSelected: (Int) -> Unit,
+    state: HomeScreen.HomeState
 ) {
     when {
-        labels.isEmpty() -> NoTabBarRow()
-        else -> ScrollTabRow(labels, tabIndex, onTabSelected)
+        state.directories.isEmpty() -> NoTabBarRow()
+        else -> ScrollTabRow(state)
     }
 }
 
@@ -50,10 +49,10 @@ private fun NoTabBarRow() {
 
 @Composable
 private fun ScrollTabRow(
-    labels: List<String>,
-    tabIndex: Int,
-    onTabSelected: (Int) -> Unit,
+    state: HomeScreen.HomeState,
 ) {
+    val labels = state.directories.map { it.directory.label }
+
     Column(
         modifier = Modifier.background(color = MaterialTheme.colorScheme.primaryContainer),
     ) {
@@ -62,10 +61,10 @@ private fun ScrollTabRow(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.contentColorFor(NavigationBarDefaults.containerColor),
             edgePadding = 0.dp,
-            selectedTabIndex = tabIndex,
+            selectedTabIndex = state.selectedDirectoryIndex,
             indicator = { tabPositions ->
                 TabRowDefaults.SecondaryIndicator(
-                    Modifier.tabIndicatorOffset(tabPositions[tabIndex]),
+                    Modifier.tabIndicatorOffset(tabPositions[state.selectedDirectoryIndex]),
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
             },
@@ -73,8 +72,10 @@ private fun ScrollTabRow(
             labels.forEachIndexed { index, label ->
                 Tab(
                     text = { Text(label) },
-                    selected = tabIndex == index,
-                    onClick = { onTabSelected(index) },
+                    selected = state.selectedDirectoryIndex == index,
+                    onClick = {
+                        state.event(HomeScreen.HomeEvent.SelectDirectory(index))
+                    },
                 )
             }
         }
@@ -84,6 +85,5 @@ private fun ScrollTabRow(
 @Composable
 @Preview
 fun TabBarPreview() {
-    val labels = listOf("aaa", "bbb", "ccc", "aaa", "bbb", "ccc")
-    TabBar(labels, tabIndex = 0, onTabSelected = {})
+    TabBar(state = HomeScreen.HomeState{})
 }
