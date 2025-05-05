@@ -7,7 +7,9 @@ import com.slack.circuit.runtime.screen.Screen
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data object TodoDetailScreen : Screen {
+data class TodoDetailScreen(
+    val taskId: Int,
+) : Screen {
     data class TodoDetailState(
         val task: Task = Task(),
         val event: (TodoDetailEvent) -> Unit,

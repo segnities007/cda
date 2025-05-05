@@ -47,5 +47,9 @@ data object HomeScreen : Screen {
         data class InsertDirectory(
             val label: String,
         ) : HomeEvent
+
+        data class NavigateToTodoDetail(
+            val taskId: Int,
+        ) : HomeEvent
     }
 }

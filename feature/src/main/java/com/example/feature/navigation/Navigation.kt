@@ -29,9 +29,10 @@ fun Navigation() {
             .addUiFactories(uiFactories)
             .build()
 
+    val backStack = rememberSaveableBackStack(root = HomeScreen)
+    val navigator = rememberCircuitNavigator(backStack)
+
     CircuitCompositionLocals(circuit) {
-        val backStack = rememberSaveableBackStack(root = HomeScreen)
-        val navigator = rememberCircuitNavigator(backStack)
         NavigableCircuitContent(circuit = circuit, navigator = navigator, backStack = backStack)
     }
 }
