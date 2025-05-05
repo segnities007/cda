@@ -36,27 +36,12 @@ fun Home(
 ) {
     HomeUi(
         state = state,
+        homeStatus = state.homeStatus,
     ) {
         Box(modifier = modifier.fillMaxSize()) {
             when {
                 state.directories.isNotEmpty() -> TaskList(state = state)
                 else -> {}
-            }
-
-            when (state.homeStatus) {
-                HomeStatus.DEFAULT -> { /*Nothing*/ }
-                HomeStatus.CREATING_DIRECTORY -> {
-                    DirectoryInputCard(state)
-                }
-                HomeStatus.CREATING_TASK -> {
-                    TaskInputCard(state)
-                }
-                HomeStatus.DELETING_TASK -> {
-                    DeleteTaskDialog(state)
-                }
-                HomeStatus.DELETING_DIRECTORY -> {
-                    DeleteDirectoryDialog(state)
-                }
             }
         }
     }
@@ -65,7 +50,8 @@ fun Home(
 @Composable
 private fun HomeUi(
     state: HomeScreen.HomeState,
-    content: @Composable (Modifier) -> Unit,
+    homeStatus: HomeStatus,
+    content: @Composable () -> Unit,
 ) {
     val items =
         when {
@@ -93,7 +79,9 @@ private fun HomeUi(
                         icon = painterResource(R.drawable.baseline_folder_delete_24),
                         label = "delete directory",
                         homeStatus = HomeStatus.DELETING_DIRECTORY,
-                        onClick = { state.event(HomeScreen.HomeEvent.UpdateHomeStatus(it)) },
+                        onClick = {
+                            state.event(HomeScreen.HomeEvent.UpdateHomeStatus(it))
+                        },
                     ),
                 )
             }
@@ -103,12 +91,6 @@ private fun HomeUi(
                         icon = painterResource(R.drawable.baseline_create_new_folder_24),
                         label = "create directory",
                         homeStatus = HomeStatus.CREATING_DIRECTORY,
-                        onClick = { state.event(HomeScreen.HomeEvent.UpdateHomeStatus(it)) },
-                    ),
-                    FloatingActionButtonItem(
-                        icon = painterResource(R.drawable.baseline_folder_delete_24),
-                        label = "delete directory",
-                        homeStatus = HomeStatus.DELETING_DIRECTORY,
                         onClick = { state.event(HomeScreen.HomeEvent.UpdateHomeStatus(it)) },
                     ),
                 )
@@ -124,7 +106,24 @@ private fun HomeUi(
             )
         },
     ) { innerPadding ->
-        content(Modifier.padding(innerPadding))
+        Box(Modifier.padding(innerPadding)) {
+            content()
+            when (homeStatus) {
+                HomeStatus.DEFAULT -> { /*Nothing*/ }
+                HomeStatus.CREATING_DIRECTORY -> {
+                    DirectoryInputCard(state)
+                }
+                HomeStatus.CREATING_TASK -> {
+                    TaskInputCard(state)
+                }
+                HomeStatus.DELETING_TASK -> {
+                    DeleteTaskDialog(state)
+                }
+                HomeStatus.DELETING_DIRECTORY -> {
+                    DeleteDirectoryDialog(state)
+                }
+            }
+        }
     }
 }
 

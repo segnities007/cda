@@ -37,7 +37,7 @@ fun TaskCard(
             ),
         shape = RoundedCornerShape(4.dp),
         onClick = {
-            // TODO
+            state.event(HomeScreen.HomeEvent.NavigateToTodoDetail(task.id))
         },
     ) {
         Row(

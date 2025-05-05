@@ -1,6 +1,7 @@
 package com.example.feature.screen.tododetail
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -65,12 +66,14 @@ fun TodoDetail(
 @Composable
 private fun TodoDetailUi(
     state: TodoDetailScreen.TodoDetailState,
-    content: @Composable (Modifier) -> Unit,
+    content: @Composable () -> Unit,
 ) {
     Scaffold(
         topBar = { TopBar { state.event(TodoDetailScreen.TodoDetailEvent.BackNavigate) } },
     ) {
-        content(Modifier.padding(it))
+        Box(modifier = Modifier.padding(it)) {
+            content()
+        }
     }
 }
 
